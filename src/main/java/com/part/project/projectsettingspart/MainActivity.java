@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity
 {
+    String s;
 
     FragmentTransaction ft;
     StartFragment startf;
