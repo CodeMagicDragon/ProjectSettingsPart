@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity
         startf = new StartFragment();
         cardf = new CardFragment();
         ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.layout_main, cardf);
+        ft.add(R.id.layout_main, startf);
         ft.commit();
     }
 }

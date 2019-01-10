@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:text="Загрузить сет"
             android:layout_gravity="center"
-            android:background="@color/buttonColor"/>
+            android:theme="@style/StandartButton"/>
     </FrameLayout>
     <View
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:layout_height="match_parent"
             android:text="Создать сет"
             android:layout_gravity="center"
-            android:background="@color/buttonColor"/>
+            android:theme="@style/StandartButton"/>
     </FrameLayout>
     <View
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:text="Редактировать сет"
             android:layout_gravity="center"
-            android:background="@color/buttonColor"/>
+            android:theme="@style/StandartButton"/>
     </FrameLayout>
     <View
         android:layout_width="match_parent"

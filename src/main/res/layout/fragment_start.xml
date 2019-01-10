@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/backgroundColor">
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -17,7 +18,7 @@
             android:layout_height="match_parent"
             android:text="Новый режим"
             android:layout_gravity="center"
-            android:background="@color/buttonColor"/>
+            android:theme="@style/StandartButton"/>
     </FrameLayout>
     <View
         android:layout_width="match_parent"
@@ -32,7 +33,7 @@
             android:layout_height="match_parent"
             android:text="Редактировать сеты"
             android:layout_gravity="center"
-            android:background="@color/buttonColor"/>
+            android:theme="@style/StandartButton"/>
     </FrameLayout>
     <View
         android:layout_width="match_parent"
@@ -47,7 +48,7 @@
             android:layout_height="match_parent"
             android:text="Выход"
             android:layout_gravity="center"
-            android:background="@color/buttonColor"/>
+            android:theme="@style/StandartButton"/>
     </FrameLayout>
     <View
         android:layout_width="match_parent"
