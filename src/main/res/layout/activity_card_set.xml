@@ -19,6 +19,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:theme="@style/StandartButton"
-            android:text="Назад"/>
+            android:text="Добавить"/>
     </FrameLayout>
 </LinearLayout>
