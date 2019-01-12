@@ -18,6 +18,6 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:theme="@style/StandartButton"
-        android:text="Добавить сет"
+        android:text="Добавить"
         android:layout_weight="1"/>
 </LinearLayout>
