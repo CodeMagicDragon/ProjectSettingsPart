@@ -8,12 +8,16 @@ import android.os.Bundle;
 public class SetActivity extends AppCompatActivity
 {
     FragmentTransaction ft;
+    ListFragment listf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set);
-        ft = FragmentManager().
+        listf = new ListFragment();
+        ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.layout_set, listf);
+        ft.commit();
     }
 }
