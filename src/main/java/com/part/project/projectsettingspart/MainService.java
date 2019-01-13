@@ -39,8 +39,8 @@ public class MainService extends IntentService {
     private static final String EXTRA_PARAM2 = "com.up.service.extra.PARAM2";
     private NotificationManager mNotificationManager;
 
-    public MyService2() {
-        super("MyService2");
+    public MainService() {
+        super("MainService");
     }
 
     // TODO: Customize helper method

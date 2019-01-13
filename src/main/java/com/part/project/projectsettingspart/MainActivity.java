@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity
         bDownload.setOnClickListener(click);
         bEdit.setOnClickListener(click);
         bSettings.setOnClickListener(click);
+        startService(new Intent(MainActivity.this, MainService.class));
         setTitle("StudyBlock");
     }
 
