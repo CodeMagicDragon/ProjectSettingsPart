@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
         bDownload.setOnClickListener(click);
         bEdit.setOnClickListener(click);
         bSettings.setOnClickListener(click);
+        setTitle("StudyBlock");
     }
 
     private final View.OnClickListener click = new View.OnClickListener()

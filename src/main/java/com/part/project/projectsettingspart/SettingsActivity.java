@@ -21,6 +21,7 @@ public class SettingsActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        setTitle("Настройки Режима");
         settingsList = findViewById(R.id.settings_list);
         ArrayAdapter<String> lista = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settingsNames);
         settingsList.setAdapter(lista);

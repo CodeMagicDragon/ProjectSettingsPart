@@ -15,6 +15,7 @@ public class SetActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set);
+        setTitle("Сеты");
         listf = new ListFragment();
         ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.layout_set, listf);
