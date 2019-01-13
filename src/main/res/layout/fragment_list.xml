@@ -17,5 +17,6 @@
         android:layout_gravity="center"
         android:theme="@style/StandartButton"
         android:text="Добавить"
+        android:textColor="#ffffff"
         android:layout_weight="1"/>
 </LinearLayout>
