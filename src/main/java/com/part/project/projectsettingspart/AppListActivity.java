@@ -1,5 +1,6 @@
 package com.part.project.projectsettingspart;
 
+import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -11,5 +12,7 @@ public class AppListActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_list);
+        PackageManager pm = getPackageManager();
+        //pm.getInstalledApplications();
     }
 }
