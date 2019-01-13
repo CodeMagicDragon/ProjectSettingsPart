@@ -19,8 +19,8 @@ import java.util.ListIterator;
 
 public class AppListActivity extends AppCompatActivity
 {
-    List<Boolean> appEnabled;
-    List<String> appPackage;
+    //List<Boolean> appEnabled;
+    List<String> appName;
     String[] strApp;
     PackageManager pm;
     ListView appList;
@@ -32,8 +32,8 @@ public class AppListActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_list);
         pm = getPackageManager();
-        appEnabled = new LinkedList<Boolean>();
-        appPackage = new LinkedList<String>();
+        //appEnabled = new LinkedList<Boolean>();
+        appName = new LinkedList<String>();
         (new loadAppList()).execute();
         try
         {
@@ -48,12 +48,12 @@ public class AppListActivity extends AppCompatActivity
         {
             appEnabled.add(ai.packageName);
         }*/
-        strApp = new String[appEnabled.size()];
-        for (int i = 0; i < appEnabled.size(); i++)
+        strApp = new String[appName.size()];
+        for (int i = 0; i < appName.size(); i++)
         {
-            strApp[i] = appPackage.get(i) + " " + Boolean.toString(appEnabled.get(i));
+            strApp[i] = appName.get(i); //+ " " + Boolean.toString(appEnabled.get(i));
         }
-        ArrayAdapter<String> lista = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strApp);
+        ArrayAdapter<String> lista = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, strApp);
         appList.setAdapter(lista);
     }
     private class loadAppList extends AsyncTask<Void, Void, Void>
@@ -63,11 +63,19 @@ public class AppListActivity extends AppCompatActivity
         {
             List<ApplicationInfo> applist;
             applist = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-            for (ApplicationInfo as : applist)
-            {
-                if ((as.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
-                    appEnabled.add(as.enabled);
-                    appPackage.add(pm.getApplicationLabel(as).toString());
+            for (ApplicationInfo as : applist) {
+                try
+                {
+                    PackageInfo pi = pm.getPackageInfo(as.packageName, 0);
+
+                    if (ApplicationInfo.FLAG_SYSTEM != pi.applicationInfo.flags)
+                    {
+                        //appEnabled.add(as.enabled);
+                        appName.add(pm.getApplicationLabel(as).toString());
+                    }
+                }
+                catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
                 }
             }
             return null;
