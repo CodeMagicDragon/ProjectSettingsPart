@@ -10,8 +10,6 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity
 {
-    String s;
-
     Button bDownload, bEdit, bSettings;
 
     @Override
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity
             switch (v.getId())
             {
                 case R.id.b_settings:
-                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                    startActivity(new Intent(MainActivity.this, AppListActivity.class));
                     // go to settings
                     break;
                 case R.id.b_edit:
