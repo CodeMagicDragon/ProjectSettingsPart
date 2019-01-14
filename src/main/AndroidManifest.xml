@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.part.project.projectsettingspart">
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -20,9 +20,13 @@
         </activity>
         <activity android:name=".SettingsActivity" />
         <activity android:name=".SetActivity" />
-        <activity android:name=".AppListActivity"></activity>
-        <service android:name=".MainService"
-            android:exported="false"/>
+        <activity android:name=".AppListActivity" />
+
+        <service
+            android:name=".MainService"
+            android:exported="false" />
+
+        <activity android:name=".SetChooseActivity"></activity>
     </application>
 
 </manifest>

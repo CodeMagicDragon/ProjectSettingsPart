@@ -28,23 +28,9 @@ public class SetActivity extends AppCompatActivity
         setList = findViewById(R.id.set_edit_list);
         buttonAdd = findViewById(R.id.set_add_button);
         SharedPreferences sp = getSharedPreferences("sets", Context.MODE_PRIVATE);
-        if (sp.contains("set_names"))
-        {
-            Set<String> nameSet = new HashSet<>();
-            sp.getStringSet("set_names", nameSet);
-            setNames = new String[nameSet.size()];
-            int i = 0;
-            for (String s : nameSet)
-            {
-                setNames[i] = s;
-                i++;
-            }
-        }
-        else
-        {
-            setNames = new String[0];
-        }
+        setNames = (new SetActions()).loadSetNames(this);
         ArrayAdapter<String> setAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setNames);
         setList.setAdapter(setAdapter);
+        // listeners - go to edit set
     }
 }
