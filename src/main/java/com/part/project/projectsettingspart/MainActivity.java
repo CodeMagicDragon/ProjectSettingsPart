@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
             switch (v.getId())
             {
                 case R.id.b_settings:
-                    startActivity(new Intent(MainActivity.this, AppListActivity.class));
+                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                     // go to settings
                     break;
                 case R.id.b_edit:
