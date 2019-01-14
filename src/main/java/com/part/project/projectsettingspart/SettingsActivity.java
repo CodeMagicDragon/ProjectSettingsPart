@@ -38,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity
                         //startActivity(new Intent(SettingsActivity.this, TimeActivity.class));
                         break;
                     case 1:
-                        //startActivity(new Intent(SettingsActivity.this, SetsActivity.class));
+                        startActivity(new Intent(SettingsActivity.this, SetChooseActivity.class));
                         break;
                     case 2:
                         startActivity(new Intent(SettingsActivity.this, AppListActivity.class));
