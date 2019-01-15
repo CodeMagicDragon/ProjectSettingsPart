@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,8 +30,9 @@ public class AppListActivity extends AppCompatActivity
 {
     //List<Boolean> appEnabled;
     List<String> appName;
+    List<String> appPackage;
     String[] strApp;
-    String[] choosenApps;
+    //String[] choosenApps;
     PackageManager pm;
     ListView appList;
     Button addb;
@@ -41,14 +43,16 @@ public class AppListActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_list);
+        Set<String> appBlockedSet;
         pm = getPackageManager();
         appName = new LinkedList<>();
+        appPackage = new LinkedList<>();
         setTitle("Выбор приложений");
         loadAppList a = new loadAppList();
         a.execute();
         try
         {
-            Thread.sleep(500);
+            Thread.sleep(2000);
         }
         catch (InterruptedException e)
         {
@@ -63,6 +67,22 @@ public class AppListActivity extends AppCompatActivity
         }
         ArrayAdapter<String> lista = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, strApp);
         appList.setAdapter(lista);
+        SharedPreferences sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
+        appBlockedSet = new HashSet<String>();
+        if (sp.contains("blocked_apps"))
+        {
+            appBlockedSet = sp.getStringSet("blocked_apps", null);
+        }
+        if (appBlockedSet != null)
+        {
+            for (int i = 0; i < strApp.length; i++)
+            {
+                if (appBlockedSet.contains(appPackage.get(i)))
+                {
+                    appList.setItemChecked(i, true);
+                }
+            }
+        }
         addb.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -70,7 +90,7 @@ public class AppListActivity extends AppCompatActivity
             {
                 SparseBooleanArray chApps = appList.getCheckedItemPositions();
                 Set<String> chAppsSet = new HashSet<>();
-                int k = 0;
+                /*int k = 0;
                 for (int i = 0; i < chApps.size(); i++)
                 {
                     if (chApps.valueAt(i))
@@ -78,21 +98,21 @@ public class AppListActivity extends AppCompatActivity
                         k++;
                     }
                 }
-                choosenApps = new String[k];
-                k = 0;
-                for (int i = 0; i < chApps.size(); i++)
+                //choosenApps = new String[k];
+                k = 0;*/
+                for (int i = 0; i < appPackage.size(); i++)
                 {
-                    if (chApps.valueAt(i))
+                    if (chApps.get(i))
                     {
-                        choosenApps[k] = strApp[i];
-                        chAppsSet.add(strApp[i]);
-                        k++;
+                        //choosenApps[k] = strApp[i];
+                        chAppsSet.add(appPackage.get(i));//strApp[i]);
+                        //k++;
                     }
                 }
-                SharedPreferences sp = getSharedPreferences("settings", Context.MODE_PRIVATE);
-                SharedPreferences.Editor spe = sp.edit();
-                spe.putStringSet("blocked_apps", chAppsSet);
-                spe.apply();
+                SharedPreferences sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
+                SharedPreferences.Editor spEditor = sp.edit();
+                spEditor.putStringSet("blocked_apps", chAppsSet);
+                spEditor.apply();
                 finish();
             }
         });
@@ -112,6 +132,7 @@ public class AppListActivity extends AppCompatActivity
                     if (ApplicationInfo.CATEGORY_GAME <= pi.applicationInfo.category
                             && pi.applicationInfo.category <= ApplicationInfo.CATEGORY_PRODUCTIVITY)
                     {
+                        appPackage.add(as.packageName);
                         appName.add(pm.getApplicationLabel(as).toString());
                     }
                 }

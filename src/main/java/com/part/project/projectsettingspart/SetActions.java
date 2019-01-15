@@ -16,11 +16,11 @@ public class SetActions
     public String[] loadSetNames(Context context)
     {
         String[] setNames;
-        SharedPreferences sp = context.getSharedPreferences("sets", Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
         if (sp.contains("set_names"))
         {
             Set<String> nameSet = new HashSet<>();
-            sp.getStringSet("set_names", nameSet);
+            nameSet = sp.getStringSet("set_names", null);
             setNames = new String[nameSet.size()];
             int i = 0;
             for (String s : nameSet)

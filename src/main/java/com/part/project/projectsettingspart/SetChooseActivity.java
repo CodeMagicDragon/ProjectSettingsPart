@@ -19,7 +19,14 @@ public class SetChooseActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_choose);
         setList = findViewById(R.id.set_choose_list);
-        setNames = (new SetActions()).loadSetNames(this);
+        setNames = (new SetActions()).loadSetNames(getApplicationContext());
+        try
+        {
+            Thread.sleep(2000);
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
         ArrayAdapter<String> setAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setNames);
         setList.setAdapter(setAdapter);
         setList.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -27,9 +34,10 @@ public class SetChooseActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int p, long id)
             {
-                SharedPreferences sp = (SetChooseActivity.this).getSharedPreferences("active_set", Context.MODE_PRIVATE);
+                SharedPreferences sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
                 SharedPreferences.Editor spEditor = sp.edit();
                 spEditor.putString("active_set", setNames[p]);
+                spEditor.apply();
                 finish();
             }
         });
