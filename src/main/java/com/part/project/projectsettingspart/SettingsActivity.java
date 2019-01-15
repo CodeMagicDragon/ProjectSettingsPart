@@ -85,21 +85,20 @@ public class SettingsActivity extends AppCompatActivity
             appName = new LinkedList<>();
             appPackage = new LinkedList<>();
             for (ApplicationInfo as : appInfoList) {
-                try
-                {
-                    PackageInfo pi = pm.getPackageInfo(as.packageName, 0);
-
-                    if (ApplicationInfo.CATEGORY_GAME <= pi.applicationInfo.category
-                            && pi.applicationInfo.category <= ApplicationInfo.CATEGORY_PRODUCTIVITY)
+                /*try
+                {*/
+                    //PackageInfo pi = pm.getPackageInfo(as.packageName, 0);
+                    if (0/*ApplicationInfo.CATEGORY_GAME*/ <= as.category
+                            && as.category <= 7/*ApplicationInfo.CATEGORY_PRODUCTIVITY*/)
                     {
                         appPackage.add(as.packageName);
                         appName.add(pm.getApplicationLabel(as).toString());
                     }
-                }
+                /*}
                 catch (PackageManager.NameNotFoundException e)
                 {
                     e.printStackTrace();
-                }
+                }*/
             }
             return null;
         }

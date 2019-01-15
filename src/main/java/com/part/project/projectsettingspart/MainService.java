@@ -131,13 +131,10 @@ public class MainService extends IntentService {
                     {
                         String currentApp = mySortedMap.get(mySortedMap.lastKey()).getPackageName();
                         Log.d(LOG_APP, currentApp);
-                        for (String s : blockedApps)
-                        {
-                            Log.d("sLOG", s);
-                        } // lastDetectedApp != null && blockedApps != null &&
                         if (lastDetectedApp != null && blockedApps != null && (!currentApp.equals(lastDetectedApp)) && blockedApps.contains(currentApp))
                         {
-                            Intent intent = new Intent(this, CardViewActivity.class);
+                            Intent intent = new Intent();
+                            intent.setClass(this, CardViewActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }
