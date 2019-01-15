@@ -20,13 +20,6 @@ public class SetChooseActivity extends AppCompatActivity
         setContentView(R.layout.activity_set_choose);
         setList = findViewById(R.id.set_choose_list);
         setNames = (new SetActions()).loadSetNames(getApplicationContext());
-        try
-        {
-            Thread.sleep(2000);
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
         ArrayAdapter<String> setAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setNames);
         setList.setAdapter(setAdapter);
         setList.setOnItemClickListener(new AdapterView.OnItemClickListener()

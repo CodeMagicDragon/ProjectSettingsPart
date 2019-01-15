@@ -1,6 +1,7 @@
 package com.part.project.projectsettingspart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -29,9 +30,8 @@ import java.util.Set;
 public class AppListActivity extends AppCompatActivity
 {
     //List<Boolean> appEnabled;
-    List<String> appName;
-    List<String> appPackage;
-    String[] strApp;
+    String[] appName;
+    String[] appPackage;
     //String[] choosenApps;
     PackageManager pm;
     ListView appList;
@@ -44,28 +44,13 @@ public class AppListActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_list);
         Set<String> appBlockedSet;
-        pm = getPackageManager();
-        appName = new LinkedList<>();
-        appPackage = new LinkedList<>();
+        Intent intent = getIntent();
+        appName = intent.getStringArrayExtra("app_names");
+        appPackage = intent.getStringArrayExtra("app_packages");
         setTitle("Выбор приложений");
-        loadAppList a = new loadAppList();
-        a.execute();
-        try
-        {
-            Thread.sleep(2000);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
         appList = findViewById(R.id.app_list);
         addb = findViewById(R.id.app_list_add_b);
-        strApp = new String[appName.size()];
-        for (int i = 0; i < appName.size(); i++)
-        {
-            strApp[i] = appName.get(i);
-        }
-        ArrayAdapter<String> lista = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, strApp);
+        ArrayAdapter<String> lista = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,appName);
         appList.setAdapter(lista);
         SharedPreferences sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
         appBlockedSet = new HashSet<String>();
@@ -75,9 +60,9 @@ public class AppListActivity extends AppCompatActivity
         }
         if (appBlockedSet != null)
         {
-            for (int i = 0; i < strApp.length; i++)
+            for (int i = 0; i < appPackage.length; i++)
             {
-                if (appBlockedSet.contains(appPackage.get(i)))
+                if (appBlockedSet.contains(appPackage[i]))
                 {
                     appList.setItemChecked(i, true);
                 }
@@ -100,12 +85,12 @@ public class AppListActivity extends AppCompatActivity
                 }
                 //choosenApps = new String[k];
                 k = 0;*/
-                for (int i = 0; i < appPackage.size(); i++)
+                for (int i = 0; i < appPackage.length; i++)
                 {
                     if (chApps.get(i))
                     {
                         //choosenApps[k] = strApp[i];
-                        chAppsSet.add(appPackage.get(i));//strApp[i]);
+                        chAppsSet.add(appPackage[i]);//strApp[i]);
                         //k++;
                     }
                 }
@@ -116,32 +101,5 @@ public class AppListActivity extends AppCompatActivity
                 finish();
             }
         });
-    }
-    private class loadAppList extends AsyncTask<Void, Void, Void>
-    {
-        @Override
-        protected Void doInBackground(Void... voids)
-        {
-            List<ApplicationInfo> appInfoList;
-            appInfoList = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-            for (ApplicationInfo as : appInfoList) {
-                try
-                {
-                    PackageInfo pi = pm.getPackageInfo(as.packageName, 0);
-
-                    if (ApplicationInfo.CATEGORY_GAME <= pi.applicationInfo.category
-                            && pi.applicationInfo.category <= ApplicationInfo.CATEGORY_PRODUCTIVITY)
-                    {
-                        appPackage.add(as.packageName);
-                        appName.add(pm.getApplicationLabel(as).toString());
-                    }
-                }
-                catch (PackageManager.NameNotFoundException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
     }
 }
