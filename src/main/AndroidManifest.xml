@@ -9,30 +9,38 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".App"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".SetActivity" />
-        <activity android:name=".AppListActivity" />
+        <activity android:name=".SettingsActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".SetActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".AppListActivity"
+            android:launchMode="singleTop"/>
 
         <service
             android:name=".MainService"
-            android:exported="false" />
+            android:exported="false"/>
 
-        <activity android:name=".SetChooseActivity" />
-        <activity android:name=".CardViewActivity"></activity>
+        <activity android:name=".SetChooseActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".CardViewActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".LoadActivity"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

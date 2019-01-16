@@ -21,6 +21,6 @@
         android:layout_weight="1"
         android:layout_gravity="center"
         android:textColor="@color/textColor"
-        android:text="Выбрать"
+        android:text="Сохранить"
         android:theme="@style/StandartButton"/>
 </LinearLayout>

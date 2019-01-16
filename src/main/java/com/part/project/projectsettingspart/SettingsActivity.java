@@ -23,11 +23,7 @@ import java.util.List;
 public class SettingsActivity extends AppCompatActivity
 {
     ListView settingsList;
-    String[] settingsNames = {"Настройки времени", "Cет для режима", "Блокируемые приложения"};
-    List<String> appName;
-    List<String> appPackage;
-    PackageManager pm;
-    boolean launchedActivity;
+    String[] settingsNames = {"Cет для режима", "Блокируемые приложения", "Настройки времени"};
 
 
     @Override
@@ -35,8 +31,6 @@ public class SettingsActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        launchedActivity = false;
-        pm = getPackageManager();
         setTitle("Настройки режима");
         settingsList = findViewById(R.id.settings_list);
         ArrayAdapter<String> lista = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settingsNames);
@@ -46,85 +40,21 @@ public class SettingsActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int p, long id)
             {
-                if (!launchedActivity)
+                switch (p)
                 {
-                    switch (p)
-                    {
-                        case 0:
-                            //startActivity(new Intent(SettingsActivity.this, TimeActivity.class));
-                            break;
-                        case 1:
-                            startActivity(new Intent(SettingsActivity.this, SetChooseActivity.class));
-                            break;
-                        case 2:
-                            (new loadAppList()).execute();
-                            break;
-                        default:
-                            break;
-                    }
-                    launchedActivity = true;
+                    case 0:
+                        startActivity(new Intent(SettingsActivity.this, SetChooseActivity.class));
+                        break;
+                    case 1:
+                        startActivity(new Intent(SettingsActivity.this, LoadActivity.class));
+                        break;
+                    case 2:
+                        //startActivity(new Intent(SettingsActivity.this, TimeActivity.class));
+                        break;
+                    default:
+                        break;
                 }
             }
         });
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        launchedActivity = false;
-    }
-
-    private class loadAppList extends AsyncTask<Void, Void, Void>
-    {
-        @Override
-        protected Void doInBackground(Void... voids)
-        {
-            List<ApplicationInfo> appInfoList;
-            appInfoList = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-            appName = new LinkedList<>();
-            appPackage = new LinkedList<>();
-            for (ApplicationInfo as : appInfoList) {
-                /*try
-                {*/
-                    //PackageInfo pi = pm.getPackageInfo(as.packageName, 0);
-                    if (0/*ApplicationInfo.CATEGORY_GAME*/ <= as.category
-                            && as.category <= 7/*ApplicationInfo.CATEGORY_PRODUCTIVITY*/)
-                    {
-                        appPackage.add(as.packageName);
-                        appName.add(pm.getApplicationLabel(as).toString());
-                    }
-                /*}
-                catch (PackageManager.NameNotFoundException e)
-                {
-                    e.printStackTrace();
-                }*/
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid)
-        {
-            super.onPostExecute(aVoid);
-            Intent intent = new Intent(SettingsActivity.this, AppListActivity.class);
-            String[] appNameArray = new String[appName.size()];
-            String[] appPackageArray = new String[appPackage.size()];
-            int i = 0;
-            for (String s : appName)
-            {
-                appNameArray[i] = s;
-                i++;
-            }
-            i = 0;
-            for (String s : appPackage)
-            {
-                appPackageArray[i] = s;
-                i++;
-            }
-            intent.putExtra("app_names", appNameArray);
-            intent.putExtra("app_packages", appPackageArray);
-            startActivity(intent);
-        }
     }
 }
