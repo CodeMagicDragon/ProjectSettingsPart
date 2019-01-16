@@ -1,6 +1,7 @@
 package com.part.project.projectsettingspart;
 
 import android.animation.ObjectAnimator;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +10,8 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.part.project.projectsettingspart.model.Card;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -19,8 +22,10 @@ public class CardViewActivity extends AppCompatActivity
     Button imageButton;
     Button buttonNext;
     TextView textView;
+    String cardSetName;
+    int cardnum = 3;
     int k = 0;
-    String[] cards;
+    Card[] cards;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -31,9 +36,19 @@ public class CardViewActivity extends AppCompatActivity
         imageButton = findViewById(R.id.imageView);
         buttonNext = findViewById(R.id.card_button);
         bar = findViewById(R.id.card_bar);
-        cards = new String[]{"cat", "кошка", "dog", "собака", "whale", "кит"};
-        textView.setText("1/" + Integer.toString(cards.length / 2));
-        imageButton.setText("Cat");
+        SharedPreferences sp = (getApplicationContext()).getSharedPreferences("settings", 0);
+        cardSetName = sp.getString("active_set", null);
+        if (cardSetName == null)
+        {
+            cardSetName = "base";
+        }
+        cards = new Card[cardnum];
+        for (int i = 0; i < cardnum; i++)
+        {
+            cards[i] = (new SetActions()).getRandomCard(App.getInstance().getAppDatabase().getCardDao().getBySetName(cardSetName));
+        }
+        textView.setText("1/" + Integer.toString(cardnum));
+        imageButton.setText(cards[0].firstText);
         imageButton.setOnClickListener(click);
         buttonNext.setOnClickListener(click);
         startAnimation(2000);
@@ -46,22 +61,23 @@ public class CardViewActivity extends AppCompatActivity
         {
             if (bar.getProgress() == 0)
             {
-                if (k >= cards.length - 1)
+                if (k >= cardnum * 2 - 1)
                 {
                     finish();
                 }
                 else
                 {
                     k++;
-                    imageButton.setText(cards[k]);
-                    textView.setText(Integer.toString(k / 2 + 1) + "/" + Integer.toString(cards.length / 2));
+                    textView.setText(Integer.toString(k / 2 + 1) + "/" + Integer.toString(cardnum));
                     if (k % 2 == 1)
                     {
+                        imageButton.setText(cards[k / 2].secondText);
                         bar.setVisibility(INVISIBLE);
                         startAnimation(0);
                     }
                     else
                     {
+                        imageButton.setText(cards[k / 2].firstText);
                         bar.setVisibility(VISIBLE);
                         startAnimation(2000);
                     }

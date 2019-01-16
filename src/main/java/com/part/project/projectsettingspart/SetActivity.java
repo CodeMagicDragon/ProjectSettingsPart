@@ -19,6 +19,7 @@ public class SetActivity extends AppCompatActivity
     ListView setList;
     Button buttonAdd;
     String[] setNames;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -27,8 +28,7 @@ public class SetActivity extends AppCompatActivity
         setTitle("Сеты");
         setList = findViewById(R.id.set_edit_list);
         buttonAdd = findViewById(R.id.set_add_button);
-        SharedPreferences sp = getSharedPreferences("sets", Context.MODE_PRIVATE);
-        setNames = (new SetActions()).loadSetNames(this);
+        setNames = (new SetActions()).loadSetNames();
         ArrayAdapter<String> setAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setNames);
         setList.setAdapter(setAdapter);
         // listeners - go to edit set

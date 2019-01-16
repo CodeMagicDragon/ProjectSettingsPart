@@ -166,7 +166,7 @@ public class MainService extends IntentService {
         int NOTIFICATION_ID = 1;
         String CHANNEL_NAME = "Notification Channel";
         if (android.os.Build.VERSION.SDK_INT < 26) {
-            int importance = NotificationManager.IMPORTANCE_LOW;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
             Intent notificationIntent = new Intent(this, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(this,
                     0, notificationIntent, 0);
@@ -184,7 +184,7 @@ public class MainService extends IntentService {
         else {
             String CHANNEL_ID = "my_channel_01";// The id of the channel.
             CharSequence name = getString(R.string.app_name);// The user-visible name of the channel.
-            int importance = NotificationManager.IMPORTANCE_LOW;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
             Intent notificationIntent = new Intent(this, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(this,
                     0, notificationIntent, 0);
