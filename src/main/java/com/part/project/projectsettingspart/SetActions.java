@@ -47,7 +47,7 @@ public class SetActions
     }
     public Card getRandomCard(Card[] set)
     {
-        if (set == null)
+        if (set == null || set.length == 0)
         {
             return CardBuilder(0, "null", "null", "null", "null");
         }

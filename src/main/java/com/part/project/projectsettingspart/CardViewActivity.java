@@ -37,11 +37,11 @@ public class CardViewActivity extends AppCompatActivity
         buttonNext = findViewById(R.id.card_button);
         bar = findViewById(R.id.card_bar);
         SharedPreferences sp = (getApplicationContext()).getSharedPreferences("settings", 0);
-        cardSetName = sp.getString("active_set", null);
-        if (cardSetName == null)
-        {
-            cardSetName = "base";
-        }
+        //cardSetName = sp.getString("active_set", null);
+        //if (cardSetName == null)
+        //{
+        cardSetName = "base";
+        //}
         cards = new Card[cardnum];
         for (int i = 0; i < cardnum; i++)
         {
