@@ -26,14 +26,20 @@ public class App extends Application
         String[] firstTexts = new String[]{"cat", "dog", "whale", "bird", "elephant", "monkey", "mouse", "human", "tiger", "horse", "lion", "bear"};
         String[] secondTexts = new String[]{"кошка", "собака", "кит", "птица", "слон", "обезьяна", "мышь", "человек", "тигр", "лошадь", "лев", "медведь"};
         //Card[] card = new Card[baseCardNum];
-        Card card = new Card();
-        for (int i = 0; i < baseCardNum; i++)
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor spEditor = sp.edit();
+        if (!sp.contains("first_launch"))
         {
-            card.name = "name" + Integer.toString(i);
-            card.firstText = firstTexts[i];
-            card.secondText = secondTexts[i];
-            card.setName = "base";
-            appDatabase.getCardDao().insert(card);
+            Card card = new Card();
+            for (int i = 0; i < baseCardNum; i++) {
+                card.name = "name" + Integer.toString(i);
+                card.firstText = firstTexts[i];
+                card.secondText = secondTexts[i];
+                card.setName = "base";
+                appDatabase.getCardDao().insert(card);
+            }
+            spEditor.putInt("first_launch", 0);
+            spEditor.apply();
         }
     }
 
