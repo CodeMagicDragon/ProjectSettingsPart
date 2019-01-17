@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.part.project.projectsettingspart.model.SetActions;
+
 public class SetChooseActivity extends AppCompatActivity
 {
     ListView setList;
@@ -35,5 +37,12 @@ public class SetChooseActivity extends AppCompatActivity
             }
         });
         // set click listener
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        App.getInstance().destroyActivityOnResume(this);
     }
 }

@@ -1,7 +1,10 @@
 package com.part.project.projectsettingspart;
 
+import android.app.Activity;
 import android.app.Application;
 import android.arch.persistence.room.Room;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.part.project.projectsettingspart.model.AppDatabase;
 import com.part.project.projectsettingspart.model.Card;
@@ -34,6 +37,14 @@ public class App extends Application
         }
     }
 
+    public void destroyActivityOnResume(Activity activity)
+    {
+        SharedPreferences sp  = getApplicationContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+        if (sp.contains("start_activity") && sp.getInt("start_activity", 0) == 1)
+        {
+            activity.finish();
+        }
+    }
 
     public static App getInstance()
     {

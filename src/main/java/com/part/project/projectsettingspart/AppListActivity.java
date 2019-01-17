@@ -102,4 +102,11 @@ public class AppListActivity extends AppCompatActivity
             }
         });
     }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        App.getInstance().destroyActivityOnResume(this);
+    }
 }

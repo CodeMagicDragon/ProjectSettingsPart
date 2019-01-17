@@ -15,6 +15,7 @@ public class LoadActivity extends AppCompatActivity
     List<String> appName;
     List<String> appPackage;
     PackageManager pm;
+    boolean launchedOnCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -23,6 +24,21 @@ public class LoadActivity extends AppCompatActivity
         setContentView(R.layout.activity_load);
         pm = getPackageManager();
         (new loadAppList()).execute();
+        launchedOnCreate = true;
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (launchedOnCreate)
+        {
+            launchedOnCreate = !launchedOnCreate;
+        }
+        else
+        {
+            finish();;
+        }
     }
 
     private class loadAppList extends AsyncTask<Void, Void, Void>
@@ -37,8 +53,8 @@ public class LoadActivity extends AppCompatActivity
                 /*try
                 {*/
                 //PackageInfo pi = pm.getPackageInfo(as.packageName, 0);
-                if (0/*ApplicationInfo.CATEGORY_GAME*/ <= as.category
-                        && as.category <= 7/*ApplicationInfo.CATEGORY_PRODUCTIVITY*/)
+                if ((/*ApplicationInfo.CATEGORY_GAME*/ 0 <= as.category
+                        && as.category <= 7 /*ApplicationInfo.CATEGORY_PRODUCTIVITY*/) || as.packageName.equals("com.vkontakte.android"))
                 {
                     appPackage.add(as.packageName);
                     appName.add(pm.getApplicationLabel(as).toString());

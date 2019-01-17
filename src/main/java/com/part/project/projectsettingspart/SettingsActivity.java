@@ -24,6 +24,7 @@ public class SettingsActivity extends AppCompatActivity
 {
     ListView settingsList;
     String[] settingsNames = {"Cет для режима", "Блокируемые приложения", "Настройки времени"};
+    Intent intent;
 
 
     @Override
@@ -43,10 +44,12 @@ public class SettingsActivity extends AppCompatActivity
                 switch (p)
                 {
                     case 0:
-                        startActivity(new Intent(SettingsActivity.this, SetChooseActivity.class));
+                        intent = new Intent(SettingsActivity.this, SetChooseActivity.class);
+                        startActivity(intent);
                         break;
                     case 1:
-                        startActivity(new Intent(SettingsActivity.this, LoadActivity.class));
+                        intent = new Intent(SettingsActivity.this, LoadActivity.class);
+                        startActivity(intent);
                         break;
                     case 2:
                         //startActivity(new Intent(SettingsActivity.this, TimeActivity.class));
@@ -56,5 +59,12 @@ public class SettingsActivity extends AppCompatActivity
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        App.getInstance().destroyActivityOnResume(this);
     }
 }

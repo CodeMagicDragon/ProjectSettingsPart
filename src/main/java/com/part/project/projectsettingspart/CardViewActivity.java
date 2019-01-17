@@ -1,10 +1,10 @@
 package com.part.project.projectsettingspart;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.part.project.projectsettingspart.model.Card;
+import com.part.project.projectsettingspart.model.SetActions;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -63,6 +64,10 @@ public class CardViewActivity extends AppCompatActivity
             {
                 if (k >= cardnum * 2 - 1)
                 {
+                    SharedPreferences sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor spEditor = sp.edit();
+                    spEditor.putInt("start_activity", 1);
+                    spEditor.apply();
                     finish();
                 }
                 else
@@ -94,5 +99,4 @@ public class CardViewActivity extends AppCompatActivity
         progressAnimator.setInterpolator(new LinearInterpolator());
         progressAnimator.start();
     }
-
 }

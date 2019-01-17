@@ -1,5 +1,6 @@
-package com.part.project.projectsettingspart;
+package com.part.project.projectsettingspart.model;
 
+import com.part.project.projectsettingspart.App;
 import com.part.project.projectsettingspart.model.AppDatabase;
 import com.part.project.projectsettingspart.model.Card;
 import com.part.project.projectsettingspart.model.CardDao;

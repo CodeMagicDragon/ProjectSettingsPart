@@ -140,6 +140,10 @@ public class MainService extends IntentService {
                         }
                         if (!currentApp.equals("com.part.project.projectsettingspart"))
                         {
+                            SharedPreferences sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor spEditor = sp.edit();
+                            spEditor.putInt("start_activity", 0);
+                            spEditor.apply();
                             lastDetectedApp = currentApp;
                         }
                         Log.d(LOG_APP, currentApp);
