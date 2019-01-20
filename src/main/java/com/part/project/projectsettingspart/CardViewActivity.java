@@ -51,11 +51,7 @@ public class CardViewActivity extends AppCompatActivity
         spEditor = sp.edit();
         createFlag = true;
         clickIterator = sp.getInt("click_num", 0);
-        //cardSetName = sp.getString("active_set", null);
-        //if (cardSetName == null)
-        //{
-        cardSetName = "base";
-        //}
+        cardSetName = sp.getString("active_set", "base");
         cards = new Card[cardnum];
         for (int i = 0; i < cardnum; i++)
         {

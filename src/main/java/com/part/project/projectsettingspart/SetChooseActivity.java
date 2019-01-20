@@ -38,7 +38,6 @@ public class SetChooseActivity extends AppCompatActivity
                 finish();
             }
         });
-        // set click listener
     }
 
     @Override
