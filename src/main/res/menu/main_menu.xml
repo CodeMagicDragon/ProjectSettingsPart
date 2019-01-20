@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:item_settings="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_active_mode_item"
+        android:title="Редактирование"
+        item_settings:showAsAction="always"/>
+    <!--<item
+        android:id="@+id/menu_edit_mode_item"
+        android:title="Edit mode"
+        item_settings:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_delete_mode_item"
+        android:title="Delete mode"
+        item_settings:showAsAction="never"/> -->
+</menu>

@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,17 +18,19 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.part.project.projectsettingspart.model.Card;
+import com.part.project.projectsettingspart.model.CardDao;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class CardListEditActivity extends AppCompatActivity
+public class CardListEditActivity extends DeleteDialogAbstractActivity
 {
     ListView cardList;
     Button createCardButton;
     Button okButton;
     Button cancelButton;
     EditText textSetName;
+    CardDao cd;
     Card[] cardSet;
     Set<Integer> baseCardNames;
     String setName;
@@ -33,7 +38,9 @@ public class CardListEditActivity extends AppCompatActivity
     Intent intent;
     SharedPreferences sp;
     SharedPreferences.Editor spEditor;
+    int deletedCardId;
     boolean firstResume;
+    boolean editMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,11 +54,14 @@ public class CardListEditActivity extends AppCompatActivity
         cancelButton = findViewById(R.id.set_cancel_button);
         textSetName = findViewById(R.id.edit_card_set_name);
         setName = getIntent().getStringExtra("set_name");
+        cd = App.getInstance().getAppDatabase().getCardDao();
         baseCardNames = new HashSet<>();
+        deletedCardId = -1;
         firstResume = true;
+        editMode = true;
         baseSetName = setName;
         textSetName.setText(setName);
-        getSupportActionBar().hide();
+        setTitle("Сет");
         sp = (getApplicationContext()).getSharedPreferences("edit_card_sp", Context.MODE_PRIVATE);
         spEditor = sp.edit();
         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -59,10 +69,23 @@ public class CardListEditActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int p, long id)
             {
-                intent = new Intent(CardListEditActivity.this, CardEditActivity.class);
-                intent.putExtra("card_id", cardSet[p].id);
-                intent.putExtra("set_name", baseSetName);
-                startActivity(intent);
+                if (editMode)
+                {
+                    intent = new Intent(CardListEditActivity.this, CardEditActivity.class);
+                    intent.putExtra("card_id", cardSet[p].id);
+                    intent.putExtra("set_name", baseSetName);
+                    startActivity(intent);
+                }
+                else
+                {
+                    spEditor.putBoolean("deleted_element", false);
+                    spEditor.apply();
+                    deletedCardId = cardSet[p].id;
+                    DeleteDialogFragment delDialog = new DeleteDialogFragment();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    delDialog.show(ft, "dialog");
+                    // delete card from array
+                }
             }
         });
         createCardButton.setOnClickListener(new View.OnClickListener()
@@ -119,23 +142,68 @@ public class CardListEditActivity extends AppCompatActivity
         });
     }
 
-    @Override
-    protected void onResume()
+    public void renewAdapter()
     {
-        super.onResume();
-        App.getInstance().destroyActivityOnResume(this);
-        cardSet = App.getInstance().getAppDatabase().getCardDao().getBySetName(baseSetName);
+        cardSet = cd.getBySetName(baseSetName);
         String[] cardNames = new String[cardSet.length];
         for (int i = 0; i < cardSet.length; i++)
         {
             cardNames[i] = cardSet[i].name;
-            if (firstResume)
+        }
+        cardList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cardNames));
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        renewAdapter();
+        if (firstResume)
+        {
+            for (int i = 0; i < cardSet.length; i++)
             {
                 baseCardNames.add(cardSet[i].id);
             }
         }
-        cardList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cardNames));
         firstResume = false;
-        // get card set and set adapter
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        switch (id)
+        {
+            case R.id.menu_active_mode_item:
+                if (item.getTitle().equals(getResources().getString(R.string.edit)))
+                {
+                    item.setTitle(getResources().getString(R.string.del));
+                }
+                else
+                {
+                    item.setTitle(getResources().getString(R.string.edit));
+                }
+                editMode = !editMode;
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
+    public void onOkButtonClick()
+    {
+        if (deletedCardId != -1)
+        {
+            cd.delete(cd.getById(deletedCardId));
+        }
+        renewAdapter();
     }
 }

@@ -54,9 +54,11 @@
         <activity
             android:name=".CardEditActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".ShowNoteActivity" />
-        <activity android:name=".NoteEditActivity" />
-        <activity android:name=".FullBlockActivity"></activity>
+        <activity android:name=".ShowNoteActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".NoteEditActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".FullBlockActivity"
+            android:launchMode="singleTop" />
     </application>
-
 </manifest>

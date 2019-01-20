@@ -3,12 +3,15 @@ package com.part.project.projectsettingspart;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.part.project.projectsettingspart.model.Card;
+import com.part.project.projectsettingspart.model.CardDao;
 
 public class CardEditActivity extends AppCompatActivity
 {
@@ -19,6 +22,7 @@ public class CardEditActivity extends AppCompatActivity
     Button cancelButton;
     String setName;
     int buttonId;
+    CardDao cd;
     Card card;
 
     @Override
@@ -34,6 +38,7 @@ public class CardEditActivity extends AppCompatActivity
         cancelButton = findViewById(R.id.edit_card_cancel_button);
         buttonId = (getIntent()).getIntExtra("card_id", -1);
         setName = (getIntent()).getStringExtra("set_name");
+        cd = App.getInstance().getAppDatabase().getCardDao();
         if (buttonId == -1)
         {
             card = new Card();
@@ -52,7 +57,7 @@ public class CardEditActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 card.name = cardName.getText().toString();
-                Card c = App.getInstance().getAppDatabase().getCardDao().getByName(card.name);
+                Card c = cd.getByName(card.name);
                 if (c == null || c.id == buttonId)
                 {
                     card.firstText = cardFirstText.getText().toString();
@@ -60,11 +65,11 @@ public class CardEditActivity extends AppCompatActivity
                     card.setName = setName;
                     if (buttonId == -1)
                     {
-                        App.getInstance().getAppDatabase().getCardDao().insert(card);
+                        cd.insert(card);
                     }
                     else
                     {
-                        App.getInstance().getAppDatabase().getCardDao().update(card);
+                        cd.update(card);
                     }
                     finish();
                 }
