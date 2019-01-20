@@ -11,5 +11,9 @@
         <item name="colorButtonNormal">@color/buttonColor</item>
         <item name="colorControlHighlight">@color/backgroundColor</item>
     </style>
+    <style name="CardButton" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">#ffffff</item>
+        <item name="colorControlHighlight">#bdffac</item>
+    </style>
 
 </resources>

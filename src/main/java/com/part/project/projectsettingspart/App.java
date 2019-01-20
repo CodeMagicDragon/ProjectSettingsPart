@@ -39,6 +39,7 @@ public class App extends Application
                 appDatabase.getCardDao().insert(card);
             }
             spEditor.putInt("first_launch", 0);
+            spEditor.putBoolean("block_option_1", true); // show cards
             spEditor.apply();
         }
     }

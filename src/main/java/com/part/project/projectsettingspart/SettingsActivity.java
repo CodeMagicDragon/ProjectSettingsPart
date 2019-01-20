@@ -1,6 +1,9 @@
 package com.part.project.projectsettingspart;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -23,7 +26,12 @@ import java.util.List;
 public class SettingsActivity extends AppCompatActivity
 {
     ListView settingsList;
-    String[] settingsNames = {"Cет для режима", "Блокируемые приложения", "Настройки времени"};
+    ListView blockSettingsList;
+    String[] settingsNames = {"Cет для режима", "Блокируемые приложения", "Заметки"};
+    String[] blockSettingsNames = {"Полная блокировка", "Показывать карточки", "Показывать заметки"};
+    boolean[] blockOptions;
+    SharedPreferences sp;
+    SharedPreferences.Editor spEditor;
     Intent intent;
 
 
@@ -32,10 +40,24 @@ public class SettingsActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        setTitle("Настройки режима");
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         settingsList = findViewById(R.id.settings_list);
-        ArrayAdapter<String> lista = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settingsNames);
-        settingsList.setAdapter(lista);
+        blockSettingsList = findViewById(R.id.block_settings_list);
+        sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
+        spEditor = sp.edit();
+        blockOptions = new boolean[blockSettingsNames.length];
+        for (int i = 0; i < blockOptions.length; i++)
+        {
+            blockOptions[i] = sp.getBoolean("block_option_" + Integer.toString(i), false);
+        }
+        // load blockSettingsList
+        blockSettingsList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, blockSettingsNames));
+        settingsList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settingsNames));
+        for(int i = 0; i < blockOptions.length; i++)
+        {
+            blockSettingsList.setItemChecked(i, blockOptions[i]);
+        }
+        setTitle("Настройки режима");
         settingsList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -52,11 +74,22 @@ public class SettingsActivity extends AppCompatActivity
                         startActivity(intent);
                         break;
                     case 2:
-                        //startActivity(new Intent(SettingsActivity.this, TimeActivity.class));
+                        intent = new Intent(SettingsActivity.this, NoteEditActivity.class);
+                        startActivity(intent);
                         break;
                     default:
                         break;
                 }
+            }
+        });
+        blockSettingsList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int p, long id)
+            {
+                blockOptions[p] = !blockOptions[p];
+                spEditor.putBoolean("block_option_" + Integer.toString(p), blockOptions[p]);
+                spEditor.apply();
             }
         });
     }

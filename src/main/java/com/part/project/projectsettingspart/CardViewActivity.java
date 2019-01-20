@@ -2,7 +2,10 @@ package com.part.project.projectsettingspart;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -27,17 +30,27 @@ public class CardViewActivity extends AppCompatActivity
     int cardnum = 3;
     int k = 0;
     Card[] cards;
+    SharedPreferences sp;
+    SharedPreferences.Editor spEditor;
+    int clickIterator;
+    boolean createFlag;
+    TextView textClick;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_view);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         textView = findViewById(R.id.textView);
         imageButton = findViewById(R.id.imageView);
         buttonNext = findViewById(R.id.card_button);
         bar = findViewById(R.id.card_bar);
-        SharedPreferences sp = (getApplicationContext()).getSharedPreferences("settings", 0);
+        textClick = findViewById(R.id.text_click);
+        sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
+        spEditor = sp.edit();
+        createFlag = true;
+        clickIterator = sp.getInt("click_num", 0);
         //cardSetName = sp.getString("active_set", null);
         //if (cardSetName == null)
         //{
@@ -49,42 +62,60 @@ public class CardViewActivity extends AppCompatActivity
             cards[i] = (new SetActions()).getRandomCard(App.getInstance().getAppDatabase().getCardDao().getBySetName(cardSetName));
         }
         textView.setText("1/" + Integer.toString(cardnum));
+        textClick.setText("Кликов: " + clickIterator);
         imageButton.setText(cards[0].firstText);
         imageButton.setOnClickListener(click);
         buttonNext.setOnClickListener(click);
+        buttonNext.setVisibility(INVISIBLE);
         startAnimation(2000);
         getSupportActionBar().hide();
     }
 
     private final View.OnClickListener click = new View.OnClickListener()
     {
+        @Override
         public void onClick(View v)
         {
-            if (bar.getProgress() == 0)
+            if ((k % 2 == 0 && v.getId() == R.id.imageView) || (k % 2 == 1 && v.getId() == R.id.card_button))
             {
-                if (k >= cardnum * 2 - 1)
-                {
-                    SharedPreferences sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor spEditor = sp.edit();
-                    spEditor.putInt("start_activity", 1);
-                    spEditor.apply();
-                    finish();
-                }
-                else
+                if (bar.getProgress() == 0)
                 {
                     k++;
-                    textView.setText(Integer.toString(k / 2 + 1) + "/" + Integer.toString(cardnum));
-                    if (k % 2 == 1)
+                    clickIterator++;
+                    spEditor.putInt("click_num", clickIterator);
+                    spEditor.apply();
+                    if (k >= 2 * cardnum)
                     {
-                        imageButton.setText(cards[k / 2].secondText);
-                        bar.setVisibility(INVISIBLE);
-                        startAnimation(0);
+                        spEditor.putInt("start_activity", 1);
+                        spEditor.apply();
+                        if (sp.getBoolean("block_option_2", false))
+                        {
+                            Intent intent = new Intent();
+                            intent.setClass(CardViewActivity.this, ShowNoteActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
                     }
                     else
                     {
-                        imageButton.setText(cards[k / 2].firstText);
-                        bar.setVisibility(VISIBLE);
-                        startAnimation(2000);
+                        textView.setText(Integer.toString(k / 2 + 1) + "/" + Integer.toString(cardnum));
+                        textClick.setText("Кликов: " + clickIterator);
+                        if (k % 2 == 1)
+                        {
+                            imageButton.setText(cards[k / 2].secondText);
+                            imageButton.setClickable(false);
+                            bar.setVisibility(INVISIBLE);
+                            buttonNext.setVisibility(VISIBLE);
+                            startAnimation(0);
+                        }
+                        else
+                        {
+                            imageButton.setText(cards[k / 2].firstText);
+                            imageButton.setClickable(true);
+                            bar.setVisibility(VISIBLE);
+                            buttonNext.setVisibility(INVISIBLE);
+                            startAnimation(2000);
+                        }
                     }
                 }
             }
@@ -98,5 +129,16 @@ public class CardViewActivity extends AppCompatActivity
         progressAnimator.setDuration(duration);
         progressAnimator.setInterpolator(new LinearInterpolator());
         progressAnimator.start();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (!createFlag)
+        {
+            finish();
+        }
+        createFlag = false;
     }
 }

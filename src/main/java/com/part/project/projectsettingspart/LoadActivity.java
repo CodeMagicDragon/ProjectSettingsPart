@@ -1,6 +1,7 @@
 package com.part.project.projectsettingspart;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -22,9 +23,11 @@ public class LoadActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         pm = getPackageManager();
         (new loadAppList()).execute();
         launchedOnCreate = true;
+        setTitle("Загрузка...");
     }
 
     @Override
