@@ -21,7 +21,6 @@ public class NoteEditActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_edit);
-        getSupportActionBar().hide();
         note = findViewById(R.id.note);
         noteButton = findViewById(R.id.btn_note);
         sPref = (getApplicationContext()).getSharedPreferences("note_data", Context.MODE_PRIVATE);

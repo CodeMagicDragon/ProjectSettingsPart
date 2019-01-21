@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SetChooseActivity"
-    android:background="@color/backgroundColor"
+    android:background="@color/backgroundLightColor"
     android:orientation="vertical">
     <ListView
         android:id="@+id/set_choose_list"

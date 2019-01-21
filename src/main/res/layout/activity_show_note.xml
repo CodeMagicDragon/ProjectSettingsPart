@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/backgroundColor"
     tools:context=".ShowNoteActivity">
     <View
         android:layout_width="match_parent"
@@ -29,6 +30,7 @@
         android:layout_height="0dp"
         android:layout_weight="10"
         android:gravity="center"
+        android:textColor="@color/textColor"
         android:textSize="22sp"/>
     <Button
         android:id="@+id/next_btn"

@@ -8,6 +8,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,6 +24,7 @@ import android.widget.ListView;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.prefs.PreferenceChangeListener;
 
 public class SettingsActivity extends AppCompatActivity
 {
@@ -57,7 +60,7 @@ public class SettingsActivity extends AppCompatActivity
         {
             blockSettingsList.setItemChecked(i, blockOptions[i]);
         }
-        setTitle("Настройки режима");
+        setTitle("Настройки");
         settingsList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -101,3 +104,25 @@ public class SettingsActivity extends AppCompatActivity
         App.getInstance().destroyActivityOnResume(this);
     }
 }
+
+/*public class SettingsActivity extends AppCompatActivity
+{
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
+    }
+
+    // @Override
+    // public void onBuildHeaders(List<Header> target)
+    // {
+    //     loadHeadersFromResource(R.xml.main_settings_headers, target);
+    // }
+
+    // @Override
+    // protected boolean isValidFragment(String fragmentName)
+    // {
+    //    return SettingsFragment.class.getName().equals(fragmentName);
+    // }
+}*/
