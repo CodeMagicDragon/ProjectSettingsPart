@@ -44,7 +44,10 @@ public class MainService extends IntentService
     final String LOG_APP = "mAPP";
     Set<String> blockedApps;
     Map<String, Date> APPS;
+    Map<String, Long> blockAllTimeList;
     String lastDetectedApp = "";
+    long APP_TIME = 120000;
+    long serviceTime = 0;
 
     public MainService()
     {
@@ -75,6 +78,7 @@ public class MainService extends IntentService
             SharedPreferences.Editor spEditor;
             sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
             spEditor = sp.edit();
+            serviceTime = (new Date()).getTime();
             if (sp.contains("blocked_apps"))
             {
                 blockedApps = sp.getStringSet("blocked_apps", null);
@@ -98,7 +102,7 @@ public class MainService extends IntentService
                     if (mySortedMap != null && !mySortedMap.isEmpty())
                     {
                         String currentApp = mySortedMap.get(mySortedMap.lastKey()).getPackageName();
-                        if (lastDetectedApp != null && blockedApps != null && (!currentApp.equals(lastDetectedApp)) && blockedApps.contains(currentApp))
+                        if (lastDetectedApp != null && blockedApps != null && (!currentApp.equals(lastDetectedApp)) && blockedApps.contains(currentApp) && !blockAllTimeList.containsKey(lastDetectedApp) || ())
                         {
                             Intent intent = new Intent();
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -162,7 +166,7 @@ public class MainService extends IntentService
                     .setContentText("This notification can't be removed while program is working.")
                     .setSmallIcon(R.mipmap.study_icon)
                     .setContentIntent(pendingIntent)
-                    //.setTimeoutAfter(1)
+                    .setPriority(Notification.FLAG_NO_CLEAR)
                     .setAutoCancel(true)
                     .build();
             startForeground(NOTIFICATION_ID, notification);
