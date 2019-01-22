@@ -32,13 +32,13 @@ public class CardViewActivity extends AppCompatActivity
     SharedPreferences sp;
     SharedPreferences.Editor spEditor;
     boolean createFlag;
+    boolean fullSetMode;
     Card[] cards;
     String cardSetName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        //Log.d("THIS", "  started");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_view);
         getSupportActionBar().hide();
@@ -53,11 +53,20 @@ public class CardViewActivity extends AppCompatActivity
         sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
         spEditor = sp.edit();
         createFlag = true;
+        fullSetMode = sp.getBoolean("full_set_mode", false);
         cardSetName = sp.getString("active_set", "base");
-        cards = new Card[cardNum];
-        for (int i = 0; i < cardNum; i++)
+        if (!fullSetMode)
         {
-            cards[i] = (new SetActions()).getRandomCard(App.getInstance().getAppDatabase().getCardDao().getBySetName(cardSetName));
+            cards = new Card[cardNum];
+            for (int i = 0; i < cardNum; i++)
+            {
+                cards[i] = (new SetActions()).getRandomCard(App.getInstance().getAppDatabase().getCardDao().getBySetName(cardSetName));
+            }
+        }
+        else
+        {
+            cards = App.getInstance().getAppDatabase().getCardDao().getBySetName(cardSetName);
+            cardNum = cards.length;
         }
         nextButton.setOnClickListener(new View.OnClickListener()
         {
@@ -66,9 +75,12 @@ public class CardViewActivity extends AppCompatActivity
             {
                 if (ind + 1 == cardNum)
                 {
-                    spEditor.putInt("start_activity", 1);
-                    spEditor.apply();
-                    if (sp.getBoolean("block_option_2", false))
+                    if (!fullSetMode)
+                    {
+                        spEditor.putInt("start_activity", 1);
+                        spEditor.apply();
+                    }
+                    if (sp.getBoolean("block_option_2", false) && !fullSetMode)
                     {
                         Intent intent = new Intent();
                         intent.setClass(CardViewActivity.this, ShowNoteActivity.class);
@@ -127,20 +139,21 @@ public class CardViewActivity extends AppCompatActivity
 
     public void showCard(int ind)
     {
-        //Log.d("THIS", "  show 1");
         next = 0;
         showed += 1;
         cardButton.setText(cards[ind].firstText);
-        runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
+                progressBar.setVisibility(View.VISIBLE);
                 nextButton.setVisibility(View.INVISIBLE);
             }
         });
     }
     public void showTranslate(int ind)
     {
-        Log.d("THIS", "");
         cardButton.setText(cards[ind].secondText);
     }
 
@@ -160,6 +173,7 @@ public class CardViewActivity extends AppCompatActivity
                         @Override
                         public void run()
                         {
+                            progressBar.setVisibility(View.INVISIBLE);
                             nextButton.setVisibility(View.VISIBLE);
                         }
                     });
@@ -232,125 +246,11 @@ public class CardViewActivity extends AppCompatActivity
         super.onResume();
         if (!createFlag)
         {
-            finish();
+            if (!fullSetMode)
+            {
+                finish();
+            }
         }
         createFlag = false;
     }
 }
-
-
-/*import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
-
-public class CardViewActivity extends AppCompatActivity
-{
-    ProgressBar bar;
-    Button imageButton;
-    Button buttonNext;
-    TextView textView;
-    String cardSetName;
-    int cardnum = 3;
-    int k = 0;
-    Card[] cards;
-    SharedPreferences sp;
-    SharedPreferences.Editor spEditor;
-    int clickIterator;
-    boolean createFlag;
-    TextView textClick;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_view);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
-        textView = findViewById(R.id.textView);
-        imageButton = findViewById(R.id.imageView);
-        buttonNext = findViewById(R.id.card_button);
-        bar = findViewById(R.id.card_bar);
-        textClick = findViewById(R.id.text_click);
-        sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
-        spEditor = sp.edit();
-        createFlag = true;
-        clickIterator = sp.getInt("click_num", 0);
-        cardSetName = sp.getString("active_set", "base");
-        cards = new Card[cardnum];
-        for (int i = 0; i < cardnum; i++)
-        {
-            cards[i] = (new SetActions()).getRandomCard(App.getInstance().getAppDatabase().getCardDao().getBySetName(cardSetName));
-        }
-        textView.setText("1/" + Integer.toString(cardnum));
-        textClick.setText("Кликов: " + clickIterator);
-        imageButton.setText(cards[0].firstText);
-        imageButton.setOnClickListener(click);
-        buttonNext.setOnClickListener(click);
-        buttonNext.setVisibility(INVISIBLE);
-        startAnimation(2000);
-        getSupportActionBar().hide();
-    }
-
-    private final View.OnClickListener click = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v)
-        {
-            if ((k % 2 == 0 && v.getId() == R.id.imageView) || (k % 2 == 1 && v.getId() == R.id.card_button))
-            {
-                if (bar.getProgress() == 0)
-                {
-                    k++;
-                    clickIterator++;
-                    spEditor.putInt("click_num", clickIterator);
-                    spEditor.apply();
-                    if (k >= 2 * cardnum)
-                    {
-                        spEditor.putInt("start_activity", 1);
-                        spEditor.apply();
-                        if (sp.getBoolean("block_option_2", false))
-                        {
-                            Intent intent = new Intent();
-                            intent.setClass(CardViewActivity.this, ShowNoteActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                        }
-                        else
-                        {
-                            finish();
-                        }
-                    }
-                    else
-                    {
-                        textView.setText(Integer.toString(k / 2 + 1) + "/" + Integer.toString(cardnum));
-                        textClick.setText("Кликов: " + clickIterator);
-                        if (k % 2 == 1)
-                        {
-                            imageButton.setText(cards[k / 2].secondText);
-                            imageButton.setClickable(false);
-                            bar.setVisibility(INVISIBLE);
-                            buttonNext.setVisibility(VISIBLE);
-                            startAnimation(0);
-                        }
-                        else
-                        {
-                            imageButton.setText(cards[k / 2].firstText);
-                            imageButton.setClickable(true);
-                            bar.setVisibility(VISIBLE);
-                            buttonNext.setVisibility(INVISIBLE);
-                            startAnimation(2000);
-                        }
-                    }
-                }
-            }
-        }
-    };
-
-    private void startAnimation(int duration)
-    {
-        ObjectAnimator progressAnimator = ObjectAnimator.ofInt(bar, "progress", 100, 0);
-        bar.setScaleY(4f);
-        progressAnimator.setDuration(duration);
-        progressAnimator.setInterpolator(new LinearInterpolator());
-        progressAnimator.start();
-    }
-}
-*/

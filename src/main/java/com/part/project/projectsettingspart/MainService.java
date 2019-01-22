@@ -61,7 +61,6 @@ public class MainService extends IntentService
     public static Context getContext()
     {
         return instance;
-        // or return instance.getApplicationContext();
     }
 
     void someTask()
@@ -73,7 +72,9 @@ public class MainService extends IntentService
         while (true)
         {
             SharedPreferences sp;
+            SharedPreferences.Editor spEditor;
             sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
+            spEditor = sp.edit();
             if (sp.contains("blocked_apps"))
             {
                 blockedApps = sp.getStringSet("blocked_apps", null);
@@ -87,22 +88,16 @@ public class MainService extends IntentService
                 UsageStatsManager usm = (UsageStatsManager)this.getSystemService(Context.USAGE_STATS_SERVICE);
                 long time = System.currentTimeMillis();
                 List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,  time - 10000*10000, time);
-                /*if (appList != null && appList.size() == 0)
-                {
-                    Log.d(LOG_APP, "######### NO OPENED ACTIVITIES ##########");
-                }*/
                 if (appList != null && appList.size() > 0)
                 {
                     SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
                     for (UsageStats usageStats : appList)
                     {
-                        //Log.d(LOG_TAG, "usage stats executed : " +usageStats.getPackageName() + "\t\t ID: ");
                         mySortedMap.put(usageStats.getLastTimeUsed(), usageStats);
                     }
                     if (mySortedMap != null && !mySortedMap.isEmpty())
                     {
                         String currentApp = mySortedMap.get(mySortedMap.lastKey()).getPackageName();
-                        //Log.d(LOG_APP, currentApp);
                         if (lastDetectedApp != null && blockedApps != null && (!currentApp.equals(lastDetectedApp)) && blockedApps.contains(currentApp))
                         {
                             Intent intent = new Intent();
@@ -116,6 +111,8 @@ public class MainService extends IntentService
                             {
                                 if (sp.getBoolean("block_option_1", false))
                                 {
+                                    spEditor.putBoolean("full_set_mode", false);
+                                    spEditor.apply();
                                     intent.setClass(this, CardViewActivity.class);
                                     startActivity(intent);
                                 }
@@ -131,12 +128,10 @@ public class MainService extends IntentService
                         }
                         if (!currentApp.equals("com.part.project.projectsettingspart"))
                         {
-                            SharedPreferences.Editor spEditor = sp.edit();
                             spEditor.putInt("start_activity", 0);
                             spEditor.apply();
                             lastDetectedApp = currentApp;
                         }
-                        //Log.d(LOG_APP, currentApp);
                     }
                 }
             }
@@ -155,7 +150,6 @@ public class MainService extends IntentService
 
     public void createNotification()
     {
-        //Log.d(LOG_TAG, "notify");
         int NOTIFICATION_ID = 1;
         String CHANNEL_NAME = "Notification Channel";
         if (android.os.Build.VERSION.SDK_INT < 26)
@@ -205,8 +199,6 @@ public class MainService extends IntentService
     @Override
     protected void onHandleIntent(Intent intent)
     {
-        Log.d(LOG_TAG, "onHandleInput");
         createNotification();
-        //return START_STICKY;
     }
 }

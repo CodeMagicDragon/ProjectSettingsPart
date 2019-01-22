@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.LinkedList;
@@ -31,10 +32,11 @@ public class SettingsActivity extends AppCompatActivity
     ListView settingsList;
     ListView blockSettingsList;
     String[] settingsNames = {"Cет для режима", "Блокируемые приложения", "Заметки"};
-    String[] blockSettingsNames = {"Полная блокировка", "Показывать карточки", "Показывать заметки", "Карточки с проверкой"};
+    String[] blockSettingsNames = {"Полная блокировка", "Показывать карточки", "Показывать заметки"};
     boolean[] blockOptions;
     SharedPreferences sp;
     SharedPreferences.Editor spEditor;
+    Button startFullTestButton;
     Intent intent;
 
 
@@ -46,6 +48,7 @@ public class SettingsActivity extends AppCompatActivity
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         settingsList = findViewById(R.id.settings_list);
         blockSettingsList = findViewById(R.id.block_settings_list);
+        startFullTestButton = findViewById(R.id.start_full_test_button);
         sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
         spEditor = sp.edit();
         blockOptions = new boolean[blockSettingsNames.length];
@@ -95,6 +98,16 @@ public class SettingsActivity extends AppCompatActivity
                 spEditor.apply();
             }
         });
+        startFullTestButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                spEditor.putBoolean("full_set_mode", true);
+                spEditor.apply();
+                startActivity(new Intent(SettingsActivity.this, CardViewActivity.class));
+            }
+        });
     }
 
     @Override
@@ -104,25 +117,3 @@ public class SettingsActivity extends AppCompatActivity
         App.getInstance().destroyActivityOnResume(this);
     }
 }
-
-/*public class SettingsActivity extends AppCompatActivity
-{
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
-    }
-
-    // @Override
-    // public void onBuildHeaders(List<Header> target)
-    // {
-    //     loadHeadersFromResource(R.xml.main_settings_headers, target);
-    // }
-
-    // @Override
-    // protected boolean isValidFragment(String fragmentName)
-    // {
-    //    return SettingsFragment.class.getName().equals(fragmentName);
-    // }
-}*/
