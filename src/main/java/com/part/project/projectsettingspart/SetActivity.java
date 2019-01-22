@@ -85,7 +85,7 @@ public class SetActivity extends DeleteDialogAbstractActivity
     public void renewAdapter()
     {
         setNames = (new SetActions()).loadSetNames();
-        setList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setNames));
+        setList.setAdapter(new ArrayAdapter<String>(this, R.layout.app_list_item, setNames));
     }
 
     @Override

@@ -158,9 +158,9 @@ public class MainService extends IntentService
             PendingIntent pendingIntent = PendingIntent.getActivity(this,
                     0, notificationIntent, 0);
             Notification notification = new NotificationCompat.Builder(MainService.this)
-                    .setContentTitle("Manager of studying")
+                    .setContentTitle("Focus It")
                     .setContentText("This notification can't be removed while program is working.")
-                    .setSmallIcon(R.mipmap.app_icon)
+                    .setSmallIcon(R.mipmap.study_icon)
                     .setContentIntent(pendingIntent)
                     //.setTimeoutAfter(1)
                     .setAutoCancel(true)
@@ -180,7 +180,7 @@ public class MainService extends IntentService
             Notification notification = new Notification.Builder(MainService.this, CHANNEL_ID)
                     .setContentTitle("Manager of studying")
                     .setContentText("This notification can't be removed while program is working.")
-                    .setSmallIcon(R.mipmap.app_icon)
+                    .setSmallIcon(R.mipmap.study_icon)
                     .setChannelId(CHANNEL_ID)
                     .setContentIntent(pendingIntent)
                     .setTimeoutAfter(1)

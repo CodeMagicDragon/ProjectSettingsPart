@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         bDownload.setOnClickListener(click);
         bEdit.setOnClickListener(click);
         bSettings.setOnClickListener(click);
-        setTitle("StudyBlock");
+        setTitle("Focus It");
         if (needPermissionForBlocking(getApplicationContext()))
         {
             startActivityForResult(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS), 0);

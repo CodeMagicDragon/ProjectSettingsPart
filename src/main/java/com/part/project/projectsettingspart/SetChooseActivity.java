@@ -24,7 +24,7 @@ public class SetChooseActivity extends AppCompatActivity
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         setList = findViewById(R.id.set_choose_list);
         setNames = (new SetActions()).loadSetNames();
-        ArrayAdapter<String> setAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, setNames);
+        ArrayAdapter<String> setAdapter = new ArrayAdapter<String>(this, R.layout.app_list_item, setNames);
         setList.setAdapter(setAdapter);
         setList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {

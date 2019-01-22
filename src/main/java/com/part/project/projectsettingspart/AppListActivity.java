@@ -52,7 +52,7 @@ public class AppListActivity extends AppCompatActivity
         setTitle("Выбор приложений");
         appList = findViewById(R.id.app_list);
         addb = findViewById(R.id.app_list_add_b);
-        ArrayAdapter<String> lista = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,appName);
+        ArrayAdapter<String> lista = new ArrayAdapter<String>(this, R.layout.app_list_item_with_choice,appName);
         appList.setAdapter(lista);
         SharedPreferences sp = (getApplicationContext()).getSharedPreferences("settings", Context.MODE_PRIVATE);
         appBlockedSet = new HashSet<String>();

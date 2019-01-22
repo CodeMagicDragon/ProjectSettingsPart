@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLightColor"
+    android:background="@color/backgroundColor"
     tools:context=".NoteEditActivity"
     android:orientation="vertical">
 
@@ -16,8 +16,8 @@
         android:layout_weight="1"
         android:gravity="top|left"
         android:hint="Введите заметку"
-        android:textColor="@color/textDarkColor"
-        android:textColorHint="#454545"
+        android:textColor="@color/textColor"
+        android:textColorHint="@color/backgroundLightColor"
         android:singleLine="false"
         android:textSize="22sp" />
     <Button

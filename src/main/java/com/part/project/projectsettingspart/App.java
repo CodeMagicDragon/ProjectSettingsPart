@@ -25,7 +25,6 @@ public class App extends Application
         appDatabase = Room.databaseBuilder(this, AppDatabase.class, "cards_database").allowMainThreadQueries().build();
         String[] firstTexts = new String[]{"cat", "dog", "whale", "bird", "elephant", "monkey", "mouse", "human", "tiger", "horse", "lion", "bear"};
         String[] secondTexts = new String[]{"кошка", "собака", "кит", "птица", "слон", "обезьяна", "мышь", "человек", "тигр", "лошадь", "лев", "медведь"};
-        //Card[] card = new Card[baseCardNum];
         SharedPreferences sp = getApplicationContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
         SharedPreferences.Editor spEditor = sp.edit();
         if (!sp.contains("first_launch"))

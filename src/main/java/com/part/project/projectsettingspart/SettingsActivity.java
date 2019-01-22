@@ -57,8 +57,8 @@ public class SettingsActivity extends AppCompatActivity
             blockOptions[i] = sp.getBoolean("block_option_" + Integer.toString(i), false);
         }
         // load blockSettingsList
-        blockSettingsList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, blockSettingsNames));
-        settingsList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, settingsNames));
+        blockSettingsList.setAdapter(new ArrayAdapter<String>(this, R.layout.app_list_item_with_choice, blockSettingsNames));
+        settingsList.setAdapter(new ArrayAdapter<String>(this, R.layout.app_list_item, settingsNames));
         for(int i = 0; i < blockOptions.length; i++)
         {
             blockSettingsList.setItemChecked(i, blockOptions[i]);
