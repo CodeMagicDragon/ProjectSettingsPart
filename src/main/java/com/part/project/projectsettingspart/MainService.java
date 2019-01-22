@@ -102,7 +102,7 @@ public class MainService extends IntentService
                     if (mySortedMap != null && !mySortedMap.isEmpty())
                     {
                         String currentApp = mySortedMap.get(mySortedMap.lastKey()).getPackageName();
-                        if (lastDetectedApp != null && blockedApps != null && (!currentApp.equals(lastDetectedApp)) && blockedApps.contains(currentApp) && !blockAllTimeList.containsKey(lastDetectedApp) || ())
+                        if (lastDetectedApp != null && blockedApps != null && (!currentApp.equals(lastDetectedApp)) && blockedApps.contains(currentApp))
                         {
                             Intent intent = new Intent();
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
