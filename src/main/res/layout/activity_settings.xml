@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@color/textDarkColor"
-        android:text="Настройки режимов"/>
+        android:text="Настройки режимов"
+        android:textSize="20sp"/>
     <ListView
         android:id="@+id/settings_list"
         android:layout_width="match_parent"
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@color/textDarkColor"
+        android:textSize="20sp"
         android:text="Настройки блокировки"/>
     <ListView
         android:id="@+id/block_settings_list"
@@ -28,4 +30,14 @@
         android:layout_height="wrap_content"
         android:choiceMode="multipleChoice">
     </ListView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/StandartButton"
+        android:textColor="@color/textColor"
+        android:text="Полный тест"/>
 </LinearLayout>

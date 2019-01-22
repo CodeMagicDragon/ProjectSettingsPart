@@ -8,7 +8,6 @@
     <color name="buttonColor">#1E90FF</color>
     <color name="textColor">#ffffff</color>
     <color name="textDarkColor">#000000</color>
-    <color name="great">#1E90FF</color>
     <color name="transparent">#00000000</color>
     <color name="background">#ffffff</color>
 </resources>

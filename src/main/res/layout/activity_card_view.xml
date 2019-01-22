@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_weight="2"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp" />
+        android:layout_marginRight="5dp"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -23,7 +23,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:progressBackgroundTint="@color/backgroundColor"
-        android:progressTint="@color/great" />
+        android:progressTint="@color/colorPrimaryDark"/>
 
     <View
         android:layout_width="match_parent"
@@ -37,10 +37,11 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_weight="20"
-        android:background="@drawable/shape4"
+        android:background="@drawable/shape_dark"
         android:clickable="false"
+        android:textColor="@color/textColor"
         android:gravity="center"
-        android:textSize="60sp" />
+        android:textSize="60sp"/>
 
     <View
         android:layout_width="match_parent"
@@ -52,10 +53,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
+        android:textColor="@color/textColor"
         android:visibility="invisible"
-        android:background="@drawable/shape"
-
-        android:text="Next" />
+        android:theme="@style/StandartButton"
+        android:text="Далее"/>
 
     <View
         android:layout_width="match_parent"

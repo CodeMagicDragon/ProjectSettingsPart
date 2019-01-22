@@ -21,9 +21,8 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-    <style name="CardButton" parent="@style/Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">#ffffff</item>
-        <item name="colorControlHighlight">#bdffac</item>
-    </style>
 
+    <style name="FirstScreenTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/first_screen</item>
+    </style>
 </resources>

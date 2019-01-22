@@ -11,19 +11,14 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="StudyBlock"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".SettingsActivity"
@@ -54,11 +49,24 @@
         <activity
             android:name=".CardEditActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".ShowNoteActivity"
+        <activity
+            android:name=".ShowNoteActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".NoteEditActivity"
+        <activity
+            android:name=".NoteEditActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".FullBlockActivity"
+        <activity
+            android:name=".FullBlockActivity"
             android:launchMode="singleTop" />
+        <activity android:name=".FirstScreenActivity"
+            android:theme="@style/FirstScreenTheme"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
+
 </manifest>

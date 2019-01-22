@@ -31,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity
     ListView settingsList;
     ListView blockSettingsList;
     String[] settingsNames = {"Cет для режима", "Блокируемые приложения", "Заметки"};
-    String[] blockSettingsNames = {"Полная блокировка", "Показывать карточки", "Показывать заметки"};
+    String[] blockSettingsNames = {"Полная блокировка", "Показывать карточки", "Показывать заметки", "Карточки с проверкой"};
     boolean[] blockOptions;
     SharedPreferences sp;
     SharedPreferences.Editor spEditor;
