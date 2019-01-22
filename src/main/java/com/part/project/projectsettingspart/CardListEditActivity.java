@@ -150,7 +150,7 @@ public class CardListEditActivity extends DeleteDialogAbstractActivity
         {
             cardNames[i] = cardSet[i].name;
         }
-        cardList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cardNames));
+        cardList.setAdapter(new ArrayAdapter<String>(this, R.layout.app_list_item, cardNames));
     }
 
     @Override

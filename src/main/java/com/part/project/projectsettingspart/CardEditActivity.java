@@ -58,7 +58,7 @@ public class CardEditActivity extends AppCompatActivity
             {
                 card.name = cardName.getText().toString();
                 Card c = cd.getByName(card.name);
-                if (c == null || c.id == buttonId)
+                if ((c == null || c.id == buttonId) && card.name != "")
                 {
                     card.firstText = cardFirstText.getText().toString();
                     card.secondText = cardSecondText.getText().toString();

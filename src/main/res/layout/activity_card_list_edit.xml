@@ -14,6 +14,8 @@
         android:singleLine="true"
         android:textColor="@color/textColor"
         android:textColorHint="@color/backgroundLightColor"
+        android:backgroundTint="@color/textTintColor"
+        android:textCursorDrawable="@color/textTintColor"
         android:textAlignment="center"
         android:hint="Название сета"/>
     <ListView

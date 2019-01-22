@@ -40,5 +40,5 @@
         android:layout_height="wrap_content"
         android:theme="@style/StandartButton"
         android:textColor="@color/textColor"
-        android:text="Полный тест"/>
+        android:text="Тест по всем карточкам"/>
 </LinearLayout>

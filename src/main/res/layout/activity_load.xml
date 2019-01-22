@@ -17,6 +17,7 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:alpha="1.0"
+        android:backgroundTint="@color/textColor"
         android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar" />
     <View
         android:layout_width="match_parent"

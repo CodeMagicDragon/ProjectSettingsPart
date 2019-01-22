@@ -14,7 +14,9 @@
         android:layout_gravity="center"
         android:textAlignment="center"
         android:textColor="@color/textColor"
+        android:backgroundTint="@color/textTintColor"
         android:textColorHint="@color/backgroundLightColor"
+        android:textCursorDrawable="@color/textTintColor"
         android:singleLine="true"
         android:hint="Имя карточки"/>
     <LinearLayout
@@ -34,6 +36,8 @@
             android:hint="Первая сторона"
             android:singleLine="true"
             android:textColor="@color/textColor"
+            android:textCursorDrawable="@color/textTintColor"
+            android:backgroundTint="@color/textTintColor"
             android:textColorHint="@color/backgroundLightColor"
             android:textAlignment="center"/>
         <View
@@ -48,6 +52,8 @@
             android:hint="Вторая сторона"
             android:textAlignment="center"
             android:textColor="@color/textColor"
+            android:textCursorDrawable="@color/textTintColor"
+            android:backgroundTint="@color/textTintColor"
             android:textColorHint="@color/backgroundLightColor"
             android:singleLine="true"/>
         <View

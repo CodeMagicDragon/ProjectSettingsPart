@@ -10,4 +10,5 @@
     <color name="textDarkColor">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="background">#ffffff</color>
+    <color name="textTintColor">#ffffff</color>
 </resources>

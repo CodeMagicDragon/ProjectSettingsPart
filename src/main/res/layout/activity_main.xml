@@ -13,33 +13,25 @@
         android:layout_weight="2"/>
     <Button
         android:id="@+id/b_settings"
-        android:layout_width="200dp"
+        android:layout_width="210dp"
         android:layout_height="0dp"
         android:text="Насторйки"
         android:layout_weight="1"
         android:layout_gravity="center"
         android:textColor="@color/textColor"
         android:theme="@style/StandartButton"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"/>
     <Button
         android:id="@+id/b_edit"
-        android:layout_width="200dp"
+        android:layout_width="210dp"
         android:layout_height="0dp"
         android:text="Редактировать сеты"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:textColor="@color/textColor"
         android:theme="@style/StandartButton"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"/>
     <Button
         android:id="@+id/b_download"
-        android:layout_width="200dp"
+        android:layout_width="210dp"
         android:layout_height="0dp"
         android:text="Загрузить сеты"
         android:layout_gravity="center"
