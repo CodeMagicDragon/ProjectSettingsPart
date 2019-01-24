@@ -17,7 +17,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:progressTint="@color/colorPrimary"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <View
         android:layout_width="match_parent"
@@ -37,6 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/StandartButton"
-        android:text="Next" />
+        android:text="Next"/>
 
 </LinearLayout>

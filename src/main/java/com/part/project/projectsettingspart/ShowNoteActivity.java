@@ -45,7 +45,8 @@ public class ShowNoteActivity extends AppCompatActivity
                 {
                     sp = getApplicationContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
                     spEditor = sp.edit();
-                    spEditor.putInt("start_activity", 1);
+                    spEditor.putBoolean("start_activity", false);
+                    spEditor.putBoolean("test_passed", true);
                     spEditor.apply();
                     finish();
                 }
@@ -63,7 +64,7 @@ public class ShowNoteActivity extends AppCompatActivity
     private void startAnimation(int duration)
     {
         ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar, "progress", 100, 0);
-        progressBar.setScaleY(4f);
+        progressBar.setScaleY(15f);
         progressAnimator.setDuration(duration);
         progressAnimator.setInterpolator(new LinearInterpolator());
         progressAnimator.start();

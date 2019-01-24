@@ -77,7 +77,8 @@ public class CardViewActivity extends AppCompatActivity
                 {
                     if (!fullSetMode)
                     {
-                        spEditor.putInt("start_activity", 1);
+                        spEditor.putBoolean("start_activity", false);
+                        spEditor.putBoolean("test_passed", true);
                         spEditor.apply();
                     }
                     if (sp.getBoolean("block_option_2", false) && !fullSetMode)

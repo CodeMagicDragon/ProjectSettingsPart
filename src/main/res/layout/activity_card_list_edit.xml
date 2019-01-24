@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"
+        android:focusedByDefault="false"
         android:textColor="@color/textColor"
         android:textColorHint="@color/backgroundLightColor"
         android:backgroundTint="@color/textTintColor"
@@ -36,20 +37,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/set_cancel_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:theme="@style/StandartButton"
-            android:textColor="@color/textColor"
-            android:layout_weight="1"
-            android:text="Отмена"/>
-        <Button
             android:id="@+id/set_ok_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:textColor="@color/textColor"
             android:theme="@style/StandartButton"
             android:layout_weight="1"
-            android:text="Ок"/>
+            android:text="Сохранить"/>
     </LinearLayout>
 </LinearLayout>

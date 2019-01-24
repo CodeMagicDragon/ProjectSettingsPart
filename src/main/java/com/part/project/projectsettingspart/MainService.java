@@ -28,6 +28,7 @@ import java.io.IOError;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,8 +47,10 @@ public class MainService extends IntentService
     Map<String, Date> APPS;
     Map<String, Long> blockAllTimeList;
     String lastDetectedApp = "";
-    long APP_TIME = 120000;
+    long APP_TIME = 2 * 60 * 1000;
     long serviceTime = 0;
+
+    // add time sync in card view and note classes
 
     public MainService()
     {
@@ -101,9 +104,27 @@ public class MainService extends IntentService
                     }
                     if (mySortedMap != null && !mySortedMap.isEmpty())
                     {
-                        String currentApp = mySortedMap.get(mySortedMap.lastKey()).getPackageName();
-                        if (lastDetectedApp != null && blockedApps != null && (!currentApp.equals(lastDetectedApp)) && blockedApps.contains(currentApp))
+                        if (sp.getBoolean("test_passed", false))
                         {
+                            if (blockAllTimeList.containsKey(lastDetectedApp))
+                            {
+                                blockAllTimeList.remove(lastDetectedApp);
+                            }
+                            blockAllTimeList.put(lastDetectedApp, serviceTime);
+                            spEditor.putBoolean("test_passed", false);
+                            spEditor.apply();
+                        }
+                        String currentApp = mySortedMap.get(mySortedMap.lastKey()).getPackageName();
+                        if (lastDetectedApp != null && blockedApps != null && (!currentApp.equals(lastDetectedApp)) && blockedApps.contains(currentApp)
+                                && (!blockAllTimeList.containsKey(lastDetectedApp) || (blockAllTimeList.containsKey(lastDetectedApp)
+                                && (blockAllTimeList.get(lastDetectedApp) + APP_TIME < serviceTime))))
+                        {
+                            if (blockAllTimeList.containsKey(lastDetectedApp))
+                            {
+                                blockAllTimeList.remove(lastDetectedApp);
+                            }
+                            spEditor.putBoolean("start_activity", false);
+                            spEditor.apply();
                             Intent intent = new Intent();
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             if (sp.getBoolean("block_option_0", false))
@@ -130,12 +151,12 @@ public class MainService extends IntentService
                                 }
                             }
                         }
-                        if (!currentApp.equals("com.part.project.projectsettingspart"))
+                        /*if (!currentApp.equals("com.part.project.projectsettingspart"))
                         {
                             spEditor.putInt("start_activity", 0);
                             spEditor.apply();
-                            lastDetectedApp = currentApp;
-                        }
+                        }*/
+                        lastDetectedApp = currentApp;
                     }
                 }
             }
@@ -156,6 +177,7 @@ public class MainService extends IntentService
     {
         int NOTIFICATION_ID = 1;
         String CHANNEL_NAME = "Notification Channel";
+        blockAllTimeList = new HashMap<>();
         if (android.os.Build.VERSION.SDK_INT < 26)
         {
             Intent notificationIntent = new Intent(this, MainActivity.class);

@@ -41,7 +41,7 @@
         android:clickable="false"
         android:textColor="@color/textColor"
         android:gravity="center"
-        android:textSize="60sp"/>
+        android:textSize="30sp"/>
 
     <View
         android:layout_width="match_parent"

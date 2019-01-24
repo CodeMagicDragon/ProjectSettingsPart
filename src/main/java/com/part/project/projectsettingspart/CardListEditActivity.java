@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,11 +29,11 @@ public class CardListEditActivity extends DeleteDialogAbstractActivity
     ListView cardList;
     Button createCardButton;
     Button okButton;
-    Button cancelButton;
+    //Button cancelButton;
     EditText textSetName;
     CardDao cd;
     Card[] cardSet;
-    Set<Integer> baseCardNames;
+    //Set<Integer> baseCardNames;
     String setName;
     String baseSetName;
     Intent intent;
@@ -51,11 +52,11 @@ public class CardListEditActivity extends DeleteDialogAbstractActivity
         cardList = findViewById(R.id.card_list);
         createCardButton = findViewById(R.id.create_card_button);
         okButton = findViewById(R.id.set_ok_button);
-        cancelButton = findViewById(R.id.set_cancel_button);
+        //cancelButton = findViewById(R.id.set_cancel_button);
         textSetName = findViewById(R.id.edit_card_set_name);
         setName = getIntent().getStringExtra("set_name");
         cd = App.getInstance().getAppDatabase().getCardDao();
-        baseCardNames = new HashSet<>();
+        //baseCardNames = new HashSet<>();
         deletedCardId = -1;
         firstResume = true;
         editMode = true;
@@ -104,26 +105,13 @@ public class CardListEditActivity extends DeleteDialogAbstractActivity
             @Override
             public void onClick(View v)
             {
-                setName = textSetName.getText().toString();
-                //setName += "(user)";
-                Card[] c = App.getInstance().getAppDatabase().getCardDao().getBySetName(setName);
-                if (!setName.equals("") && (c.equals(null) || c.length == 0 || setName.equals(baseSetName))) // ??
+                if (correctNameCheck())
                 {
-                    for (int i = 0; i < cardSet.length; i++)
-                    {
-                        cardSet[i] = App.getInstance().getAppDatabase().getCardDao().getById(cardSet[i].id);
-                        cardSet[i].setName = setName;
-                        App.getInstance().getAppDatabase().getCardDao().update(cardSet[i]);
-                    }
                     finish();
-                }
-                else
-                {
-                    Toast.makeText(CardListEditActivity.this, "Имя сета недопустимо", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        cancelButton.setOnClickListener(new View.OnClickListener()
+        /*cancelButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -139,7 +127,43 @@ public class CardListEditActivity extends DeleteDialogAbstractActivity
                 }
                 finish();
             }
-        });
+        });*/
+    }
+
+    // with empty name sets
+
+    @Override
+    public void onBackPressed()
+    {
+        if (correctNameCheck())
+        {
+            super.onBackPressed();
+        }
+        else
+        {
+            Toast.makeText(CardListEditActivity.this, "Имя сета недопустимо", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public boolean correctNameCheck()
+    {
+        setName = textSetName.getText().toString();
+        Card[] c = App.getInstance().getAppDatabase().getCardDao().getBySetName(setName);
+        if (!setName.equals("") && (c.equals(null) || c.length == 0 || setName.equals(baseSetName))) // ??
+        {
+            for (int i = 0; i < cardSet.length; i++)
+            {
+                cardSet[i] = App.getInstance().getAppDatabase().getCardDao().getById(cardSet[i].id);
+                cardSet[i].setName = setName;
+                App.getInstance().getAppDatabase().getCardDao().update(cardSet[i]);
+            }
+            return true;
+        }
+        else
+        {
+            Toast.makeText(CardListEditActivity.this, "Имя сета недопустимо", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 
     public void renewAdapter()
@@ -158,13 +182,13 @@ public class CardListEditActivity extends DeleteDialogAbstractActivity
     {
         super.onResume();
         renewAdapter();
-        if (firstResume)
+        /*if (firstResume)
         {
             for (int i = 0; i < cardSet.length; i++)
             {
                 baseCardNames.add(cardSet[i].id);
             }
-        }
+        }*/
         firstResume = false;
     }
 

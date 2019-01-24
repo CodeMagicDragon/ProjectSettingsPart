@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity
                     // go to card set list
                     break;
                 case R.id.b_download:
+                    startActivity(new Intent(MainActivity.this, DownloadActivity.class));
                     // go to web part
                     break;
                 default:
