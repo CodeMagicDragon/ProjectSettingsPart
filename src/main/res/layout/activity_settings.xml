@@ -5,25 +5,31 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
     android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:textColor="@color/textColor"
-        android:text="Настройки режимов"
+        android:text="   Настройки режимов"
         android:textSize="20sp"/>
     <ListView
         android:id="@+id/settings_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:textColor="@color/textColor"
         android:textSize="20sp"
-        android:text="Настройки блокировки"/>
+        android:text="   Настройки блокировки"/>
     <ListView
         android:id="@+id/block_settings_list"
         android:layout_width="match_parent"
@@ -33,7 +39,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="10"/>
     <Button
         android:id="@+id/start_full_test_button"
         android:layout_width="match_parent"

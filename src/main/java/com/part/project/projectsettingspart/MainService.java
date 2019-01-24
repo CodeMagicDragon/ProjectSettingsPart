@@ -47,7 +47,7 @@ public class MainService extends IntentService
     Map<String, Date> APPS;
     Map<String, Long> blockAllTimeList;
     String lastDetectedApp = "";
-    long APP_TIME = 2 * 60 * 1000;
+    long APP_TIME = 2 * 60 * 1000 * 1000000;
     long serviceTime = 0;
 
     // add time sync in card view and note classes
@@ -119,10 +119,10 @@ public class MainService extends IntentService
                                 && (!blockAllTimeList.containsKey(lastDetectedApp) || (blockAllTimeList.containsKey(lastDetectedApp)
                                 && (blockAllTimeList.get(lastDetectedApp) + APP_TIME < serviceTime))))
                         {
-                            if (blockAllTimeList.containsKey(lastDetectedApp))
+                            /*if (blockAllTimeList.containsKey(lastDetectedApp))
                             {
                                 blockAllTimeList.remove(lastDetectedApp);
-                            }
+                            }*/
                             spEditor.putBoolean("start_activity", false);
                             spEditor.apply();
                             Intent intent = new Intent();

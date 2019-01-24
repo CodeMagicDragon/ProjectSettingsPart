@@ -118,7 +118,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                         String currentLanguage = unicLang.get(position);
                         if (list.size() > 0)
                         {
-                            Card[] oldCardSet = cd.getBySetName(list.get(0).language + ", " + list.get(0).cardTheme);
+                            Card[] oldCardSet = cd.getBySetName(currentLanguage + ", " + currentTheme);
                             for (int i = 0; i < oldCardSet.length; i++)
                             {
                                 cd.delete(oldCardSet[i]);
